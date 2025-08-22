@@ -1,0 +1,291 @@
+---
+title: "Álgebra Matricial"
+subtitle: Lições na linguagem R
+author:
+  - name: Isabel Azar de Holanda
+    email: isabelazarholanda@gmail.com
+    affiliation: 
+      - id: Faculdade SENAC DF
+        name: Faculdade SENAC DF
+date: last-modified
+date-format: "DD/MM/YYYY"
+format:
+  html:
+    code-fold: show
+    code-summary: "Ocultar/mostrar"
+    code-copy: true
+    number-sections: false
+    toc: true
+    toc-depth: 4
+    toc-location: left
+    toc-title: Sumário
+    title-block-banner: "#057bb4"
+    embed-resources: true
+    css: styles.css
+  pdf:
+    include-in-header: 
+      text: |
+execute:
+  warning: false
+  echo: true
+  eval: true
+  message: false
+editor: source
+editor_options: 
+  chunk_output_type: inline
+reference-location: margin
+---
+
+
+## Matriz
+
+Matrizes são tabelas retangulares de números, expressões matemáticas ou símbolos, cujo elementos são arranjados em n linhas e p colunas. A matriz M abaixo, por exemplo, organiza cada elemento **a~ij~** em 2 linhas e 3 colunas.
+
+![Matriz 2x3](https://d1f29c1bab.cbaul-cdnwnd.com/85956cb17da91ebfa62337e5d3ddaef0/200000008-c0737c2680/2.png "Matriz 2x3")
+
+
+No R, a matriz é uma estrutura de dados homogênea (deve conter mesmo tipo de dados, e.i. numérico, caracteres, lógico) de duas dimensões. Sua sintaxe básica é realizada por meio da função *matrix*( ), tendo como argumentos os elementos que compõem a matriz, na forma de um vetor, e o número de linhas e colunas.
+
+Vamos criar agora uma matriz quadrada M1 de dimensão 3, com valores inteiros positivos de 1 a 9:
+
+```{r}
+
+# Matriz quadrada 3x3 com valores de 1 a 9 (preenchida por coluna por padrão)
+M1 <- matrix(c(1:9) , nrow = 3, ncol = 3)
+M1
+
+```
+
+Por *default* os elementos são organizados por coluna na matriz. Caso se deseje que estes sejam organizados por linha, usa-se o argumento *byrow* = TRUE.
+
+Vamos criar uma nova matriz com os mesmos valores da M1, agora organizados por linha.
+
+```{r}
+
+# Mesmos valores, agora preenchendo por linha
+M2 <- matrix(c(1:9), nrow = 3, byrow = TRUE)
+M2
+```
+
+A função *matrix*( ), na realidade, organiza as dimensões de um vetor qualquer. Na prática, não é necessário informar o número de linhas e de colunas se o vetor de dados é informado. Contudo, tal prática facilita a leitura do código.
+
+Vamos criar uma matriz M3 retangular de dimensão 2x3 com valores aleatórios:
+
+```{r}
+V1 <- c(2, 3, 0.5, -1, 4.3, 100)
+
+M3 <- matrix(data = V1, nrow =  2)
+M3
+```
+
+Para criar uma matriz M4 quadrada de dimensão 6 contendo um único valor, e.g. matriz nula, informa-se este valor no argumento **data** em conjunto com o número de linhas e colunas.
+
+```{r}
+
+# Matriz 6x6 contendo apenas zeros (matriz nula)
+M4 <- matrix(0, nrow = 6, ncol = 6)
+M4
+
+```
+
+Caso seja de interesse alocar uma matriz vazia, basta informar os argumentos ncol e nrow. Esta será completada com o valor lógico **NA** (do inglês, *not avaliable*).
+
+Vamos criar agora uma matriz vazia M5 retangular de dimensão 2x3:
+
+```{r}
+
+# Matriz "vazia" 2x3 preenchida com NA
+M5 <- matrix(NA, nrow = 2, ncol = 3)
+M5
+
+```
+
+## Operações Matriciais
+
+Para ilustar as operações entre matrizes usaremos as seguintes matrizes para fins de cálculo:
+
+![Matriz 2x2](https://miro.medium.com/v2/resize:fit:640/format:webp/0*7JcipICX-Q4AQ1p7.png "Matriz 2x2")
+![Matriz 2x3](https://d1f29c1bab.cbaul-cdnwnd.com/85956cb17da91ebfa62337e5d3ddaef0/200000008-c0737c2680/2.png "Matriz 2x3")
+
+![Matriz 3x3](https://matematicabasica.net/wp-content/uploads/2019/02/matriz-determinantes-a.png "Matriz 3x3")
+
+
+
+Vamos criar agora as matrizes M6, M7, M8 e M9:
+
+```{r}
+
+# Matrizes para operações
+# 2x2 (invertível)
+M6 <- matrix(c(2, 3, 5, -6), nrow = 2, byrow = TRUE)
+
+# 2x2
+M7 <- matrix(c(1, 2,-2, 4), nrow = 2, byrow = TRUE)
+
+# 2x3
+M8 <- matrix(c(1, -2, 3,0, 4,  2), nrow = 2, byrow = TRUE)
+
+# 3x3
+M9 <- matrix(c(0.8, 0.6, 0, -0.6, 0.8, 0, 0, 0, 1), nrow = 3, byrow = TRUE)
+
+list(M6 = M6, M7 = M7, M8 = M8, M9 = M9)
+
+```
+
+## Soma e subtração
+
+Dada duas matrizes de mesma dimensionalidade, a matriz resultante da soma / substração destas matrizes corresponde à matriz cujos elementos são a soma / subtração dos elementos das matrizes originais.
+
+![Adição de matrizes](https://alemdoscalculos.com.br/wp-content/webp-express/webp-images/uploads/2021/04/adicao-matriz.jpg.webp "Matrizsoma")
+
+![Subtração de matrizes](https://alemdoscalculos.com.br/wp-content/webp-express/webp-images/uploads/2021/04/subtracao-de-matrizes.jpg.webp "Matrizdiferenca")
+
+
+
+
+No R, para a soma e substração de matrizes usa-se a mesma sintaxe que na operação entre escalares.
+
+
+Vamos somar as matrizes M6 e M7 resultando na matriz M10:
+
+```{r}
+
+# Soma: M10 = M6 + M7
+M10 <- M6 + M7
+M10
+
+```
+
+
+Agora, vamos subtrair a matriz M7 da matriz M6:
+
+```{r}
+
+# Subtração: M7 - M6
+M11 <- M7 - M6
+M11
+
+```
+
+## Multiplicação por escalar
+
+Uma matriz de dimensionalidade qualquer quando multiplicada por um escalar k, tal que k ∈ R , resulta em uma matriz de mesmas dimensões cujos elementos são o produto do escalar k por cada um dos elementos da matriz original.
+
+![Multiplicação por escalar](https://alemdoscalculos.com.br/wp-content/webp-express/webp-images/uploads/2021/04/multiplicacao-numero-real-matriz.jpg.webp "Matrizescalar")
+
+No R, utiliza-se a mesma sintaxe que na multiplicação entre escalares.
+
+Vamos multiplicar a matriz M8 pelo escalar 5, resultando na matriz M12:
+
+```{r}
+
+# Multiplicação por escalar: 5 * M8
+M12 <- 5 * M8
+M12
+
+```
+
+## Multiplicação matricial
+
+A multiplicação entre uma matriz (n x m) por uma matriz (m x p), em que m, n, p ∈ N^+^ , resulta em uma matriz de dimensões (n x p), cujos elementos são a somatória do produto entre os elementos em linha da matriz que pré-multiplica pelos elementos em coluna da matriz que pós-multiplica.
+
+![Multiplicação matricial](https://alemdoscalculos.com.br/wp-content/webp-express/webp-images/uploads/2021/04/multiplicacao-de-matrizes.jpg.webp "Multimatriz")
+
+No R, a multiplicação matricial clássica é desenvolvida pelo uso do operador %\*%, respeitando a equidade entre o número de colunas da matriz que pré-multiplica e o número de linhas da matriz que pós-multiplica.
+
+Vamos multiplicar as matrizes M6 e M7, resultando na matriz M13, e M8 e M9, resultando na matriz M14:
+
+```{r}
+
+# Multiplicações matriciais
+# 2x2 %*% 2x2 -> 2x2
+M13 <- M6 %*% M7
+# 2x3 %*% 3x2 -> 2x2
+M14 <- M8 %*% M9
+
+list(M13 = M13, M14 = M14)
+
+```
+
+## Transposta de uma matriz
+
+A transposta de uma matriz A~nxm~ é uma matriz M = A^T^~mxn~ , em que os elementos em coluna correspondem aos elementos em linha da matriz original.
+
+![Transposta de uma matriz](https://www.matematicafacil.mat.br/cursos/ensinomedio/aulas/matrizes/mat15.jpg "Transposta")
+
+No R, a transposta de uma matriz é determinada pela pela função t().
+Vamos calcular as transpostas das matrizes M6 e M8:
+
+```{r}
+
+# Transpostas de M6 e M8
+tM6 <- t(M6)
+tM8 <- t(M8)
+list(tM6 = tM6, tM8 = tM8)
+
+```
+
+## Inversa de uma matriz
+
+A inversa de uma matriz quadrada qualquer cujo determinante seja não nulo, **A~n,n~** é uma matriz de mesmas dimensões que atenda a seguinte condição:
+
+**A^-1^ . A = I**
+
+Onde, I é a matriz identidade de mesma dimensão que a matriz A.
+
+A inversa de uma matriz é estimada pela função *solve*(), mesma função utilizada para resolução de sistemas de equações em R.
+
+```{r}
+
+# Inversa de M6 (determinante != 0) e verificação
+invM6 <- solve(M6)
+
+# Verifica se invM6 %*% M6 é identidade (até tolerância numérica)
+prova_real_m6 <- M6%*%invM6
+
+invM7 <- solve(M7)
+
+prova_real_m7 <- M7%*%invM7
+
+
+```
+
+Facilmente, verifica-se a condição de existência da matriz inversa:
+
+```{r}
+
+# Determinantes
+det_M6 <- det(M6)
+
+# Matriz 3x3 com determinante igual a 1
+M15 <- matrix(c(1,2,3,
+                0,1,4,
+                5,6,0), nrow = 3, byrow = TRUE)
+det_M15 <- det(M15)
+
+list(det_M6 = det_M6, det_M15 = det_M15)
+
+```
+
+## Determinante de uma matriz
+
+O determinante de uma matriz é uma função matricial que converte uma matriz quadrada em um escalar. Para uma matriz quadrada de ordem 2, o determinante é definido como:
+
+![Determinante de uma matriz 2x2](https://totumat.com/wp-content/uploads/2020/06/image-110.png "Determinante matriz 2x2")
+
+Para uma matriz de ordem 3 ou superior, o determinante pode ser estimado pela seguinte equação:
+
+![Determinante de uma matriz de ordem 3 ou superior](https://latex.codecogs.com/svg.image?&space;det(A)=\sum_{j=1}^{n}(-1)^{i&plus;j}.a_{ij}.det(A_{-i-j}))
+
+
+Em que **A~−i−j~** corresponde à matriz **A** excluindo-se a linha i e a coluna j. Por essa equação, uma matriz de ordem n \> 2 tem seu cálculo simplificado à soma de **n^2^** determinantes originados da matriz A.
+
+No R, o determinante de uma matriz é calculado pela função *det*( )
+
+```{r}
+DET_M9 <- det(M9)
+DET_M9
+
+DET_M6 <- det(M6)
+DET_M6
+```

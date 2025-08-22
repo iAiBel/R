@@ -1,0 +1,69 @@
+---
+title: "Desafio de vendas"
+subtitle: Lições na linguagem R
+author:
+  - name: Isabel Azar de Holanda, Júlio César Nunes de Souza
+    email: isabelazarholanda@gmail.com
+    affiliation: 
+      - id: Faculdade SENAC DF
+        name: Faculdade SENAC DF
+date: last-modified
+date-format: "DD/MM/YYYY"
+format:
+  html:
+    code-fold: show
+    code-summary: "Ocultar/mostrar"
+    code-copy: true
+    number-sections: false
+    toc: true
+    toc-depth: 4
+    toc-location: left
+    toc-title: Sumário
+    title-block-banner: "#057bb4"
+    embed-resources: true
+    css: styles.css
+  pdf:
+    include-in-header: 
+      text: |
+execute:
+  warning: false
+  echo: true
+  eval: true
+  message: false
+editor: source
+editor_options: 
+  chunk_output_type: inline
+reference-location: margin
+---
+## Desafio das vendas
+
+###Tarefa 1: Criar as matrizes de vendas do primeiro trimestre
+
+```{r}
+#Criando matriz de vendas do mês de Janeiro
+Jan<- matrix(c(50, 45, 60, 30, 35, 40), nrow = 3, ncol = 2)
+
+#Criando matriz de vendas do mês de Fevereiro
+Fev<- matrix(c(55, 48, 62, 32, 38, 41), nrow = 3, ncol = 2)
+
+#Criando matriz de vendas do mês de Março
+Mar<- matrix(c(60, 50, 65, 35, 40, 45), nrow = 3, ncol =2)
+
+#Calculando a Matriz total de vendas
+vt<- Jan + Fev + Mar
+```
+
+# Tarefa 2: Qual filial teve o melhor desempenho geral em vendas de Smartphone no trimestre ? Filial "C" com 187 vendas de smartphone
+
+#Tarefa 3: Calcule a diferença de vendas entre os meses de Marõ e Janeiro
+```{r}
+D <- Mar- Jan
+```
+#Qual filial teve o maior crescimento de vendas de Laptops de Janeiro a Março? Nenhuma
+
+#Tarefa 4: Com um aumento de 10% em relação as vendas totais do trimestre anterior, Calcule a matriz de projeção de vendas(P) para o póximo trimestre
+```{r}
+projecao_vendas <- vt*1.10
+
+```
+
